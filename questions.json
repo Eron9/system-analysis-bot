@@ -1,0 +1,20 @@
+[
+  {
+    "id": "q1",
+    "question": "Что входит в обязанности системного аналитика?",
+    "options": ["Разработка кода", "Сбор и анализ требований", "Тестирование", "UI-дизайн"],
+    "answer": 1
+  },
+  {
+    "id": "q2",
+    "question": "Что такое UML-диаграмма Use Case?",
+    "options": ["Диаграмма классов", "Диаграмма вариантов использования", "Диаграмма базы данных", "Диаграмма последовательности"],
+    "answer": 1
+  },
+  {
+    "id": "q3",
+    "question": "Что означает CRUD?",
+    "options": ["Create, Read, Update, Delete", "Calculate, Rank, Use, Deploy", "Compile, Run, Upload, Download", "Connect, Retry, Update, Delete"],
+    "answer": 0
+  }
+]
