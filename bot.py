@@ -1,12 +1,15 @@
 import os
 import json
 import logging
-from aiogram import Bot, Dispatcher, types
-from aiogram.utils import executor
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-import psycopg2
 import random
 import datetime
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import Message
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
+from aiogram.client.session.aiohttp import AiohttpSession
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import psycopg2
 
 # Загружаем токен бота из окружения
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -131,12 +134,18 @@ async def process_answer(callback_query: types.CallbackQuery):
     correct_answer = int(selected) == correct
     text = "✅ Верно!" if correct_answer else f"❌ Неверно. Правильный ответ: {question['options'][correct]}"
     
-    # Обновляем баллы пользователя
-    current_score = user_scores.get(user_id, 0)
+    # Получаем текущий балл пользователя из базы данных
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT score FROM users WHERE user_id = %s', (user_id,))
+    result = cursor.fetchone()
+    current_score = result[0] if result else 0
+    
     if correct_answer:
         current_score += 1
-    user_scores[user_id] = current_score
-    update_score(user_id, current_score)  # Сохраняем результат в базе данных
+    
+    # Обновляем баллы пользователя в базе данных
+    update_score(user_id, current_score)
     
     # Сохраняем ответ в базе данных
     save_answer(user_id, question_id, selected, correct_answer)
