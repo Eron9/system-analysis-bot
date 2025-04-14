@@ -1,3 +1,4 @@
 aiogram==3.19.0
 psycopg2-binary
 apscheduler==3.8.1
+
