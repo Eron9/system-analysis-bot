@@ -161,3 +161,6 @@ async def main():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     asyncio.run(main())
+    @dp.message()
+async def ignore_all_messages(message: types.Message):
+    pass  # просто игнорирует любое сообщение
