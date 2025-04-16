@@ -154,6 +154,7 @@ async def send_welcome(message: Message):
 
 async def main():
     create_db()
+    await bot.delete_webhook(drop_pending_updates=True)  # <--- Эта строка отключает webhook
     scheduler.start()
     await dp.start_polling(bot)
 
