@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -12,8 +13,14 @@ import logging
 import random
 import datetime
 
+load_dotenv()  # Загружаем переменные окружения из .env
+
 # Загружаем токен бота из окружения
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    print("BOT_TOKEN не найден!")
+else:
+    print("BOT_TOKEN загружен успешно.")
 DATABASE_URL = os.getenv("DATABASE_URL")  # URL для подключения к PostgreSQL
 
 bot = Bot(token=BOT_TOKEN)
@@ -127,7 +134,7 @@ async def send_top_users():
 scheduler.start()
 
 # Обработчик нажатия на кнопки с ответами
-@dp.callback_query_handler(lambda c: True)
+@dp.callback_query()
 async def process_answer(callback_query: types.CallbackQuery):
     question_id, selected = callback_query.data.split(":")
     question = next((q for q in questions if q["id"] == question_id), None)
