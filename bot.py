@@ -163,6 +163,15 @@ async def process_answer(callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(callback_query.from_user.id, text)
 
+# Обработчик для команды /start
+@dp.message_handler(commands=['start'])
+async def send_welcome(message: types.Message):
+    # Приветственное сообщение
+    await message.reply("Привет! Я бот для тестирования знаний по системному анализу. Готов ли ты пройти тест? Я начну задавать тебе вопросы!")
+
+    # Отправляем вопросы пользователю
+    await send_quiz_to_user(message.from_user.id)
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     create_db()  # Создаем базу данных, если еще не существует
