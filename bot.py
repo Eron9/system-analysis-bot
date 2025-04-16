@@ -167,7 +167,7 @@ async def process_answer(callback_query: types.CallbackQuery):
 @dp.message_handler(commands=['start'])
 async def send_welcome(message: types.Message):
     # Приветственное сообщение
-    await message.reply("Привет! Я бот для тестирования знаний по системному анализу. Готов ли ты пройти тест? Я начну задавать тебе вопросы!")
+    await message.reply("Привет! Это новый проект, который поможет тебе проверить знания по системному анализу. Готов ли ты пройти тест? Я начну задавать вопросы!")
 
     # Отправляем вопросы пользователю
     await send_quiz_to_user(message.from_user.id)
