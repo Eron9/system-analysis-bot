@@ -4,6 +4,7 @@ from aiogram.types import Message
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.client.session.aiohttp import AiohttpSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import pytz  # импортируем pytz для работы с часовыми поясами
 import psycopg2
 import os
 import json
@@ -94,9 +95,11 @@ async def send_quiz_to_user(user_id):
         # Отправляем вопрос без дополнительного обращения
         await bot.send_message(user_id, q["question"], reply_markup=keyboard)
 
-# Ежедневная задача для отправки вопросов
-scheduler = AsyncIOScheduler()
+# Создаём объект часового пояса
+timezone = pytz.timezone('Europe/Moscow')  # Используйте нужный вам часовой пояс
+scheduler = AsyncIOScheduler(timezone=timezone)
 
+# Ежедневная задача для отправки вопросов
 @scheduler.scheduled_job('cron', hour=9, minute=0)  # каждый день в 9 утра
 async def send_daily_quiz():
     now = datetime.datetime.now()
