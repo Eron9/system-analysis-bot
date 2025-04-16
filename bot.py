@@ -1,8 +1,3 @@
-import os
-import json
-import logging
-import random
-import datetime
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import Message
@@ -10,13 +5,18 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.client.session.aiohttp import AiohttpSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import psycopg2
+import os
+import json
+import logging
+import random
+import datetime
 
 # Загружаем токен бота из окружения
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 DATABASE_URL = os.getenv("DATABASE_URL")  # URL для подключения к PostgreSQL
 
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher(bot=bot)
 
 # Загружаем вопросы из файла
 with open("questions.json", "r", encoding="utf-8") as f:
